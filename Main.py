@@ -43,6 +43,8 @@ level_sprites.add(floor)
 player_stats_temp = [0]  # Holds counter for animation or when can you shoot or what??? (rapid)
 enemy_count = 4
 spawn_enemies = True
+enemy_death_counter = 0
+player_damage_cooldown = 0
 
 
 def enemy_randomizer():
@@ -100,14 +102,20 @@ while keep_going:
     for bullet in bullets:
         for enemy in enemies:
             if enemy.hit_points <= 0:
-                enemies.pop(enemies.index(enemy))
-                all_sprites.remove(enemy)
-                all_enemies.remove(enemy)
+                    enemy.is_dead = True
             if pygame.sprite.collide_rect(bullet, enemy):
-                enemy.take_damage(player.attack)
+                enemy.take_damage(player.attack, screen)
                 bullets.pop(bullets.index(bullet))
                 all_sprites.remove(bullet)
                 break
+    for enemy in enemies:
+        if enemy.pop:
+            enemy_death_counter = 0
+            enemies.pop(enemies.index(enemy))
+            all_sprites.remove(enemy)
+            all_enemies.remove(enemy)
+        if pygame.sprite.collide_rect(enemy, player):
+            player.is_hurting = True
 
     player_stats_temp[0] = shoot(False, player_stats_temp[0])
     enemy_spawn(0, False)

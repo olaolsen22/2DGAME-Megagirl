@@ -13,7 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = (screen_size.get_width() / 8)
         self.rect.y = y
         self.original_y = y
-        self.hit_points = 50
+        self.hit_points = 10
         self.attack = 10
         self.rapid = 10
         self.range = 0
@@ -41,6 +41,18 @@ class Player(pygame.sprite.Sprite):
         self.jump_fight = 0
         self.jump_audio_playing = False
         self.not_moving = False
+        self.is_hurting = False
+        self.hurt_cooldown = 0
+
+    def player_hurt(self):
+        if self.is_hurting and self.hurt_cooldown == 0:
+            self.is_hurting = False
+            self.hit_points -= 1
+        if self.hurt_cooldown == self.fps:
+            self.hurt_cooldown = 0
+        else:
+            self.hurt_cooldown += 1
+
 
     def jump(self, keys):
         if not self.jump_audio_playing:
