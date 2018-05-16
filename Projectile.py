@@ -1,8 +1,9 @@
 import pygame, math
 
+
 class Projectile(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, mouse_pos):
+    def __init__(self, x, y, direction):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('sprites/player/projectiles/1.png')
         self.speed = 5
@@ -10,12 +11,20 @@ class Projectile(pygame.sprite.Sprite):
         self.rect.x = x + 40
         self.rect.y = y + 40
         self.speed = 8
-        self.direction = self.get_direction(mouse_pos)
+        self.direction = direction
+        pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound/projectile/fire.wav'))
 
-    def get_direction(self, mouse_pos):
-        return -math.degrees(math.atan2(mouse_pos[0]-self.rect.x, mouse_pos[1]-self.rect.y))+90
+    # def get_direction(self, mouse_pos):
+        # return -math.degrees(math.atan2(mouse_pos[0]-self.rect.x, mouse_pos[1]-self.rect.y))+90
+
+    def miss(self):
+        pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound/projectile/miss.wav'))
 
     def update(self):
-        self.rect.x += math.cos(math.radians(self.direction)) * self.speed
-        self.rect.y += math.sin(math.radians(self.direction)) * self.speed
+        if self.direction == 'Right':
+            self.rect.x += self.speed
+        elif self.direction == 'Left':
+            self.rect.x -= self.speed
+        # self.rect.x += math.cos(math.radians(self.direction)) * self.speed
+        # self.rect.y += math.sin(math.radians(self.direction)) * self.speed
 
