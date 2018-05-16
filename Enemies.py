@@ -12,7 +12,9 @@ class Enemy(pygame.sprite.Sprite):
         self.speed = .25
         self.rect = self.image.get_rect()
         self.rect.x = randint(screen_size[0] / 4, screen_size[0])
-        self.rect.y = 250
+        self.rect.y = (screen_size[1] / 1.4)
+        self.behavior_steps = randint(int(screen_size[0] / 6), int(screen_size[0] / 2))
+        self.behavior_count = 0
 
     def get_enemy(self, enemy_type):
         if enemy_type == 0:
@@ -28,7 +30,11 @@ class Enemy(pygame.sprite.Sprite):
 
     def behavior(self):
         if self.enemy_type == 0:
-            pass
+            if self.rect.x <= self.behavior_steps:
+                self.rect.x += self.speed
+            else:
+                self.rect.x -= self.speed
 
     def update(self, *args):
-        self.rect.x -= self.speed
+        self.behavior()
+

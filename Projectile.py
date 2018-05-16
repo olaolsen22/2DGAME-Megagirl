@@ -18,3 +18,4 @@ class Projectile(pygame.sprite.Sprite):
     def update(self):
         self.rect.x += math.cos(math.radians(self.direction)) * self.speed
         self.rect.y += math.sin(math.radians(self.direction)) * self.speed
+

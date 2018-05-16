@@ -25,7 +25,7 @@ enemies = []
 all_sprites.add(player)
 
 player_stats_temp = [0]  # Holds counter for animation or when can you shoot or what??? (rapid)
-enemy_count = 5
+enemy_count = 2
 spawn_enemies = True
 
 

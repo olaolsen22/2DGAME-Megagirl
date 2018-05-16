@@ -8,8 +8,8 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.image.load('sprites/player/idle_1.png')
         self.speed = 5
         self.rect = self.image.get_rect()
-        self.rect.x = (screen_size.get_width() / 2) - (self.image.get_width() / 2)
-        self.rect.y = (screen_size.get_height() / 2) - (self.image.get_height() / 2)
+        self.rect.x = (screen_size.get_width() / 8)
+        self.rect.y = (screen_size.get_height() / 1.4)
         self.attack = 10
         self.rapid = 4
         self.range = 0
