@@ -23,11 +23,12 @@ class Enemy(pygame.sprite.Sprite):
         if self.hit_points < 0:
             pass
         else:
+            print(self.hit_points)
             self.hit_points -= damage
 
     def behavior(self):
         if self.enemy_type == 0:
-            if
+            pass
 
     def update(self, *args):
         self.rect.x -= self.speed
