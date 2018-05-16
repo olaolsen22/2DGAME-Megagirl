@@ -13,7 +13,7 @@ class Projectile(pygame.sprite.Sprite):
         self.direction = self.get_direction(mouse_pos)
 
     def get_direction(self, mouse_pos):
-        return -math.degrees(math.atan2(mouse_pos[0]-self.rect.x, mouse_pos[1]-self.rect.y))+90
+        return -math.degrees(math.atan2(mouse_pos[0]-self.rect.x,mouse_pos[1]-self.rect.y))+90
 
     def update(self):
         self.rect.x += math.cos(math.radians(self.direction)) * self.speed
