@@ -13,7 +13,7 @@ class Enemy(pygame.sprite.Sprite):
         self.image_animate = []
         self.score_hit = 0
         self.score_kill = 0
-        self.image = pygame.image.load(self.get_enemy(enemy_type))
+        self.image = pygame.Surface.convert_alpha(pygame.image.load(self.get_enemy(enemy_type)))
         self.image_death = [pygame.Surface.convert_alpha(pygame.image.load('sprites/enemies/death.png')),
                             pygame.Surface.convert_alpha(pygame.image.load('sprites/enemies/death_1.png')),
                             pygame.Surface.convert_alpha(pygame.image.load('sprites/enemies/death_2.png')),

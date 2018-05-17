@@ -10,7 +10,7 @@ pygame.init()
 
 resolution = (1280, 720)
 screen = pygame.display.set_mode(resolution)
-pygame.display.set_caption("Megagirl")
+pygame.display.set_caption("Rockman Legends")
 background = pygame.Surface(screen.get_size())
 background = pygame.image.load('sprites/level/complet_1.png')
 background = pygame.Surface.convert(background)
@@ -107,15 +107,11 @@ def shoot(add_bullet, rapid_temp):
     rapid_temp += 1
     return rapid_temp
 
-hud_choice = 0
-
 while keep_going:
     clock.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             keep_going = False
-        print(hud_choice)
-
     keys = pygame.key.get_pressed()
     mouse = pygame.mouse.get_pressed()
 
@@ -123,11 +119,17 @@ while keep_going:
         keep_going = False
 
     if player.hit_points > 0:
+
+        # Randomizes Level
+
         if level_loading:
             player.hit_points = 10
             spawn_enemies = enemy_randomizer()
             enemy_count_1 += 2
             enemy_count_2 += 1
+            player.attack_level += 1
+            player.rapid_level += .25
+            player.update_stats(player.attack_level, player.rapid_level)
             level_loading = False
 
         if len(enemies) == 0:
@@ -136,65 +138,55 @@ while keep_going:
                 bullets.pop(bullets.index(bullet))
                 all_sprites.remove(bullet)
                 all_sprites.draw(screen)
-            hud.pause_game = True
 
-        if not hud.pause_game:
-            enemy_shoot()
-            hud.update(player.hit_points, player.score)
-            if hud.upgrade:
-                player.update_stats(hud.upgrade_temp[0], hud.upgrade_temp[1])
-                hud.upgrade_done = False
-                hud.clear_hud()
-            if keys[pygame.K_p]:
-                hud.pause_game = True
-            fps_count += 1
-            player.update(keys, mouse)
+        enemy_shoot()
+        hud.update(player.hit_points, player.score)
+        fps_count += 1
+        player.update(keys, mouse)
 
-            if keys[pygame.K_a]:
-                shoot(True, player_stats_temp[0])
+        if keys[pygame.K_a]:
+            shoot(True, player_stats_temp[0])
 
-            # Collision of player and enemy bullet
+        # Collision of player and enemy bullet
 
-            if len(enemy_bullets) > 0:
-                for bullet in enemy_bullets:
-                    if pygame.sprite.collide_rect(player, bullet):
-                        player.hit_points -= 1
-                        pygame.mixer.Channel(5).play(pygame.mixer.Sound('sound/player/sfx-hurt1.wav'))
-                        enemy_bullets.pop(enemy_bullets.index(bullet))
-                        all_sprites.remove(bullet)
+        if len(enemy_bullets) > 0:
+            for bullet in enemy_bullets:
+                if pygame.sprite.collide_rect(player, bullet):
+                    player.hit_points -= 1
+                    pygame.mixer.Channel(5).play(pygame.mixer.Sound('sound/player/sfx-hurt1.wav'))
+                    enemy_bullets.pop(enemy_bullets.index(bullet))
+                    all_sprites.remove(bullet)
 
-            # Collision of player bullet and enemy
+        # Collision of player bullet and enemy
 
-            for bullet in bullets:
-                for enemy in enemies:
-                    if enemy.hit_points <= 0:
-                        enemy.is_dead = True
-                    if pygame.sprite.collide_rect(bullet, enemy) and not enemy.is_dead:
-                        player.score += enemy.score_hit
-                        enemy.take_damage(player.attack, screen)
-                        bullets.pop(bullets.index(bullet))
-                        all_sprites.remove(bullet)
-                        break
-            # Death of enemy
+        for bullet in bullets:
             for enemy in enemies:
-                if enemy.pop:
-                    player.score += enemy.score_kill
-                    enemy_death_counter = 0
-                    enemies.pop(enemies.index(enemy))
-                    all_sprites.remove(enemy)
-                    all_enemies.remove(enemy)
+                if enemy.hit_points <= 0:
+                    enemy.is_dead = True
+                if pygame.sprite.collide_rect(bullet, enemy) and not enemy.is_dead:
+                    player.score += enemy.score_hit
+                    enemy.take_damage(player.attack, screen)
+                    bullets.pop(bullets.index(bullet))
+                    all_sprites.remove(bullet)
+                    break
+        # Death of enemy
+        for enemy in enemies:
+            if enemy.pop:
+                player.score += enemy.score_kill
+                enemy_death_counter = 0
+                enemies.pop(enemies.index(enemy))
+                all_sprites.remove(enemy)
+                all_enemies.remove(enemy)
 
-                # Player gets hurt when colliding with enemy
+            # Player gets hurt when colliding with enemy
 
-                if pygame.sprite.collide_rect(enemy, player):
-                    player.is_hurting = True
-                    player.player_hurt()
+            if pygame.sprite.collide_rect(enemy, player):
+                player.is_hurting = True
+                player.player_hurt()
 
-            player_stats_temp[0] = shoot(False, player_stats_temp[0])
-            enemy_spawn(0, False)
-
-        if hud.pause_game:
-            hud.pause_update(player.attack_level, player.rapid_level, keys)
+        # Timer before player can shoot again
+        player_stats_temp[0] = shoot(False, player_stats_temp[0])
+        enemy_spawn(0, False)
 
         screen.blit(background, (0, 0))
         all_sprites.draw(screen)
@@ -216,7 +208,5 @@ while keep_going:
         screen.blit(gameover_help_label, (resolution[0] / 2 - (gameover_label.get_width() / 2) + 25, resolution[1] / 2 - gameover_label.get_height() + 100))
 
     pygame.display.update()
-
-
 
 pygame.quit()

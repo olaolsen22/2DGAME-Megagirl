@@ -1,5 +1,6 @@
 import pygame
 
+
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, screen_size, y, fps, floor_height):
@@ -24,19 +25,19 @@ class Player(pygame.sprite.Sprite):
         self.last = 0
         self.isMoving = False
         self.direction = "Right"
-        self.images_run = [pygame.image.load("sprites/player/run_1.png"),
-                           pygame.image.load("sprites/player/run_2.png"),
-                           pygame.image.load("sprites/player/run_3.png"),
-                           pygame.image.load("sprites/player/run_4.png")]
-        self.images_run_attack = [pygame.image.load("sprites/player/runAttack_1.png"),
-                                  pygame.image.load("sprites/player/runAttack_2.png"),
-                                  pygame.image.load("sprites/player/runAttack_3.png"),
-                                  pygame.image.load("sprites/player/runAttack_4.png")]
-        self.image_idle_attack = pygame.image.load("sprites/player/idle_2.png")
-        self.image_jump = [pygame.image.load("sprites/player/jump_1.png"),
-                           pygame.image.load("sprites/player/jump_2.png")]
-        self.image_jump_attack = [pygame.image.load("sprites/player/jumpAttack_1.png"),
-                                  pygame.image.load("sprites/player/jumpAttack_2.png")]
+        self.images_run = [pygame.Surface.convert_alpha(pygame.image.load("sprites/player/run_1.png")),
+                           pygame.Surface.convert_alpha(pygame.image.load("sprites/player/run_2.png")),
+                           pygame.Surface.convert_alpha(pygame.image.load("sprites/player/run_3.png")),
+                           pygame.Surface.convert_alpha(pygame.image.load("sprites/player/run_4.png"))]
+        self.images_run_attack = [pygame.Surface.convert_alpha(pygame.image.load("sprites/player/runAttack_1.png")),
+                                  pygame.Surface.convert_alpha(pygame.image.load("sprites/player/runAttack_2.png")),
+                                  pygame.Surface.convert_alpha(pygame.image.load("sprites/player/runAttack_3.png")),
+                                  pygame.Surface.convert_alpha(pygame.image.load("sprites/player/runAttack_4.png"))]
+        self.image_idle_attack = pygame.Surface.convert_alpha(pygame.image.load("sprites/player/idle_2.png"))
+        self.image_jump = [pygame.Surface.convert_alpha(pygame.image.load("sprites/player/jump_1.png")),
+                           pygame.Surface.convert_alpha(pygame.image.load("sprites/player/jump_2.png"))]
+        self.image_jump_attack = [pygame.Surface.convert_alpha(pygame.image.load("sprites/player/jumpAttack_1.png")),
+                                  pygame.Surface.convert_alpha(pygame.image.load("sprites/player/jumpAttack_2.png"))]
         self.frame = 0
         self.run_counter = [0, 0]
         self.fps = fps
@@ -221,5 +222,3 @@ class Player(pygame.sprite.Sprite):
 
         elif self.jumping:
             self.jump(keys)
-
-

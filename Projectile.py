@@ -5,7 +5,7 @@ class Projectile(pygame.sprite.Sprite):
 
     def __init__(self, x, y, direction, player):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('sprites/player/projectiles/1.png')
+        self.image = pygame.Surface.convert_alpha(pygame.image.load('sprites/player/projectiles/1.png'))
         self.speed = 5
         self.rect = self.image.get_rect()
         self.rect.x = x + 40
