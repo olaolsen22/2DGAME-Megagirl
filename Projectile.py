@@ -3,7 +3,7 @@ import pygame, math
 
 class Projectile(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, direction):
+    def __init__(self, x, y, direction, player):
         pygame.sprite.Sprite.__init__(self)
         self.image = pygame.image.load('sprites/player/projectiles/1.png')
         self.speed = 5
@@ -21,10 +21,14 @@ class Projectile(pygame.sprite.Sprite):
         pygame.mixer.Channel(1).play(pygame.mixer.Sound('sound/projectile/miss.wav'))
 
     def update(self):
-        if self.direction == 'Right':
-            self.rect.x += self.speed
-        elif self.direction == 'Left':
-            self.rect.x -= self.speed
-        # self.rect.x += math.cos(math.radians(self.direction)) * self.speed
-        # self.rect.y += math.sin(math.radians(self.direction)) * self.speed
+            if self.direction == 'Right':
+                self.rect.x += self.speed
+            elif self.direction == 'Left':
+                self.rect.x -= self.speed
+
+    def update_enemy(self):
+        self.speed = 3
+        self.image = pygame.Surface.convert_alpha(pygame.image.load('sprites/enemies/projectiles/ranged.png'))
+        self.rect.x += math.cos(math.radians(self.direction)) * self.speed
+        self.rect.y += math.sin(math.radians(self.direction)) * self.speed
 

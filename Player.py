@@ -10,15 +10,19 @@ class Player(pygame.sprite.Sprite):
         self.screen_size = screen_size
         self.floor_height = floor_height
         self.rect = self.image.get_rect()
-        self.rect.x = (screen_size.get_width() / 8)
+        self.rect.x = (screen_size.get_width() / 16)
         self.rect.y = y
         self.original_y = y
         self.hit_points = 10
-        self.attack = 10
-        self.rapid = 10
-        self.range = 0
+        self.score = 0
+
+        self.attack_level = 1
+        self.rapid_level = 1
+        self.attack = 5
+        self.rapid = 2
+
+        self.last = 0
         self.isMoving = False
-        self.energy = 0
         self.direction = "Right"
         self.images_run = [pygame.image.load("sprites/player/run_1.png"),
                            pygame.image.load("sprites/player/run_2.png"),
@@ -44,15 +48,34 @@ class Player(pygame.sprite.Sprite):
         self.is_hurting = False
         self.hurt_cooldown = 0
 
-    def player_hurt(self):
-        if self.is_hurting and self.hurt_cooldown == 0:
-            self.is_hurting = False
-            self.hit_points -= 1
-        if self.hurt_cooldown == self.fps:
-            self.hurt_cooldown = 0
-        else:
-            self.hurt_cooldown += 1
+    def update_stats(self, attack, rapid):
+        self.attack_level = attack
+        self.rapid_level = rapid
+        self.attack = attack * 2
+        self.rapid = rapid * 2
 
+    def player_hurt(self):
+        if self.hurt_cooldown == 0:
+            pygame.mixer.Channel(5).play(pygame.mixer.Sound('sound/player/sfx-hurt1.wav'))
+            self.hit_points -= 1
+            self.hurt_cooldown += 1
+        else:
+            image_temp = self.image.copy()
+            sprite_temp = pygame.PixelArray(image_temp)
+            sprite_temp.replace((3, 104, 216), (255, 255, 255), 0.1)
+            sprite_temp.replace((40, 64, 132), (255, 255, 255), 0.1)
+            sprite_temp.replace((132, 224, 248), (255, 255, 255), 0.1)
+            sprite_temp.replace((124, 128, 124), (255, 255, 255), 0.1)
+            sprite_temp.replace((244, 172, 128), (255, 255, 255), 0.1)
+            sprite_temp.replace((108, 73, 66), (255, 255, 255), 0.1)
+            sprite_temp.replace((208, 160, 104), (255, 255, 255), 0.1)
+
+            self.image = image_temp
+            if self.hurt_cooldown == self.fps * 2:
+                self.is_hurting = False
+                self.hurt_cooldown = 0
+            else:
+                self.hurt_cooldown += 1
 
     def jump(self, keys):
         if not self.jump_audio_playing:
@@ -133,6 +156,10 @@ class Player(pygame.sprite.Sprite):
                     self.rect.y += self.speed
 
     def update(self, keys, mouse):
+
+        if self.is_hurting:
+            self.player_hurt()
+
         if keys[pygame.K_LCTRL]:
             self.speed = 8
         else:
