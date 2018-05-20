@@ -17,17 +17,6 @@ class Hud(pygame.sprite.Sprite):
                              pygame.image.load('sprites/hud/health_8.png'),
                              pygame.image.load('sprites/hud/health_9.png'),
                              pygame.image.load('sprites/hud/health_10.png')]
-        self.image_stats = [pygame.image.load('sprites/hud/stat_1.png'),
-                            pygame.image.load('sprites/hud/stat_2.png'),
-                            pygame.image.load('sprites/hud/stat_3.png'),
-                            pygame.image.load('sprites/hud/stat_4.png'),
-                            pygame.image.load('sprites/hud/stat_5.png'),
-                            pygame.image.load('sprites/hud/stat_6.png'),
-                            pygame.image.load('sprites/hud/stat_7.png'),
-                            pygame.image.load('sprites/hud/stat_8.png'),
-                            pygame.image.load('sprites/hud/stat_9.png'),
-                            pygame.image.load('sprites/hud/stat_10.png'),
-                            ]
         self.image_score = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/score.png'))
         self.image_level = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/level.png'))
         self.image_enemies = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/enemies.png'))

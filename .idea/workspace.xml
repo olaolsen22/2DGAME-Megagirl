@@ -2,30 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09ff4ca9-2535-4c5e-a0f1-5ff6833b7752" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Hud.py" beforeDir="false" afterPath="$PROJECT_DIR$/Hud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/._stand_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/dodge_1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/dodge_2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/dodge_3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/dodge_4.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/idle_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/idle_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/idle_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/idle_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/jumpAttack_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/jumpAttack_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/jumpAttack_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/jumpAttack_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/jump_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/jump_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/jump_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/jump_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/runAttack_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/runAttack_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/runAttack_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/runAttack_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/runAttack_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/runAttack_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/runAttack_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/runAttack_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/run_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/run_1.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/run_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/run_2.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/run_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/run_3.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/run_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/run_4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sprites/player/stand_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/sprites/player/stand_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/pause_bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/pause_items.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/selection.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/selection_hide.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/hud/stat_9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sprites/level/platform.png" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -36,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="125" column="59" selection-start-line="125" selection-start-column="59" selection-end-line="125" selection-end-column="59" />
+            <state relative-caret-position="588">
+              <caret line="146" column="31" lean-forward="true" selection-start-line="146" selection-start-column="31" selection-end-line="146" selection-end-column="31" />
               <folding>
                 <element signature="e#1387#1977#0" />
                 <element signature="e#1914#2076#0" />
@@ -66,14 +58,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Hud.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Hud.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Hud.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="64" column="99" selection-start-line="64" selection-start-column="99" selection-end-line="64" selection-end-column="99" />
+            <state relative-caret-position="136">
+              <caret line="18" column="76" selection-start-line="18" selection-start-column="76" selection-end-line="18" selection-end-column="76" />
               <folding>
                 <element signature="e#183#991#0" />
-                <element signature="e#1019#1752#0" />
               </folding>
             </state>
           </provider>
@@ -134,8 +125,8 @@
         <option value="$PROJECT_DIR$/Enemies.py" />
         <option value="$PROJECT_DIR$/Projectile.py" />
         <option value="$PROJECT_DIR$/Player.py" />
-        <option value="$PROJECT_DIR$/Hud.py" />
         <option value="$PROJECT_DIR$/Main.py" />
+        <option value="$PROJECT_DIR$/Hud.py" />
       </list>
     </option>
   </component>
@@ -333,7 +324,6 @@
           <caret line="48" column="41" selection-end-line="59" />
           <folding>
             <element signature="e#183#991#0" />
-            <element signature="e#1019#1752#0" />
           </folding>
         </state>
       </provider>
@@ -385,7 +375,6 @@
           <caret line="63" column="24" selection-start-line="63" selection-start-column="24" selection-end-line="63" selection-end-column="24" />
           <folding>
             <element signature="e#183#991#0" />
-            <element signature="e#1019#1752#0" />
           </folding>
         </state>
       </provider>
@@ -437,7 +426,6 @@
           <caret line="77" column="28" lean-forward="true" selection-start-line="77" selection-start-column="28" selection-end-line="77" selection-end-column="28" />
           <folding>
             <element signature="e#183#991#0" />
-            <element signature="e#1019#1752#0" />
           </folding>
         </state>
       </provider>
@@ -483,7 +471,6 @@
           <caret line="82" column="28" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="28" />
           <folding>
             <element signature="e#183#991#0" />
-            <element signature="e#1019#1752#0" />
           </folding>
         </state>
       </provider>
@@ -529,7 +516,6 @@
           <caret line="35" column="69" lean-forward="true" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="69" />
           <folding>
             <element signature="e#183#991#0" />
-            <element signature="e#1019#1752#0" />
           </folding>
         </state>
       </provider>
@@ -766,21 +752,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Hud.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="64" column="99" selection-start-line="64" selection-start-column="99" selection-end-line="64" selection-end-column="99" />
-          <folding>
-            <element signature="e#183#991#0" />
-            <element signature="e#1019#1752#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="125" column="59" selection-start-line="125" selection-start-column="59" selection-end-line="125" selection-end-column="59" />
+        <state relative-caret-position="588">
+          <caret line="146" column="31" lean-forward="true" selection-start-line="146" selection-start-column="31" selection-end-line="146" selection-end-column="31" />
           <folding>
             <element signature="e#1387#1977#0" />
             <element signature="e#1914#2076#0" />
@@ -801,6 +776,16 @@
             <element signature="e#4611#4858#0" />
             <element signature="e#6445#6595#0" />
             <element signature="e#7111#7269#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Hud.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="18" column="76" selection-start-line="18" selection-start-column="76" selection-end-line="18" selection-end-column="76" />
+          <folding>
+            <element signature="e#183#991#0" />
           </folding>
         </state>
       </provider>
