@@ -36,6 +36,7 @@ enemies = []
 
 level = Level(resolution)
 level_loading = True
+pause_game = False
 player = Player(screen, 490, fps, level.image.get_height())
 hud_sprites.add(hud)
 all_sprites.add(player)
@@ -43,23 +44,31 @@ all_sprites.add(player)
 level_sprites.add(level)
 
 player_stats_temp = [0]
-enemy_count_1 = 2
-enemy_count_2 = 1
+enemy_count_min_max_1= [0,2]
+enemy_count_min_max_2= [0,1]
 spawn_enemies = True
+current_level = 0
 enemy_total = 0
 enemy_death_counter = 0
 player_damage_cooldown = 0
 enemy_shoot_counter = [0,0]
-
-hud_choice_counter = 0
-
 gameover_sound_temp = True
 
 
+def pause_game_overlay():
+    pause_font = pygame.font.SysFont('arial', 75)
+    pause_help = pygame.font.SysFont('arial', 32)
+    pause_label = pause_font.render('GAME IS PAUSED', 1, (255, 255, 255))
+    screen.blit(pause_label, (resolution[0] / 2 - (pause_label.get_width() / 2), resolution[1] / 2 - pause_label.get_height()))
+    pause_help_label = pause_help.render('PRESS P TO RESUME', 1, (255, 255, 255))
+    screen.blit(pause_help_label, (resolution[0] / 2 - (pause_help_label.get_width() / 2) + 25,
+                                      resolution[1] / 2 - pause_help_label.get_height() + 100))
+
+
 def enemy_randomizer():
-    for i in range(0, randint(1, enemy_count_1)):
+    for i in range(0, randint(enemy_count_min_max_1[0], enemy_count_min_max_1[1])):
         enemy_spawn(0, True)
-    for i in range(0, randint(1, enemy_count_2)):
+    for i in range(0, randint(enemy_count_min_max_1[0], enemy_count_min_max_1[1])):
         enemy_spawn(1, True)
     return False
 
@@ -107,105 +116,120 @@ def shoot(add_bullet, rapid_temp):
     rapid_temp += 1
     return rapid_temp
 
+
 while keep_going:
     clock.tick(60)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             keep_going = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                if not pause_game and player.hit_points > 0:
+                    pause_game = True
+                else:
+                    pause_game = False
     keys = pygame.key.get_pressed()
     mouse = pygame.mouse.get_pressed()
 
     if keys[pygame.K_ESCAPE]:
         keep_going = False
 
-    if player.hit_points > 0:
+    screen.blit(background, (0, 0))
+    all_sprites.draw(screen)
+    all_enemies.draw(screen)
+    level_sprites.draw(screen)
+    hud_sprites.draw(screen)
+    print(enemy_total)
+    if not pause_game:
+        if player.hit_points > 0:
+            # Randomizes Level
+            if level_loading:
+                current_level += 1
+                enemy_total = 0
+                player.hit_points = 10
+                spawn_enemies = enemy_randomizer()
+                enemy_count_min_max_1[0] += 1
+                enemy_count_min_max_1[1] += 2
+                enemy_count_min_max_2[0] += 1
+                enemy_count_min_max_2[1] += 1
+                player.attack_level += 1
+                player.rapid_level += .25
+                player.update_stats(player.attack_level, player.rapid_level)
+                for enemy in enemies:
+                    enemy_total += 1
+                level_loading = False
 
-        # Randomizes Level
-
-        if level_loading:
-            player.hit_points = 10
-            spawn_enemies = enemy_randomizer()
-            enemy_count_1 += 2
-            enemy_count_2 += 1
-            player.attack_level += 1
-            player.rapid_level += .25
-            player.update_stats(player.attack_level, player.rapid_level)
-            level_loading = False
-
-        if len(enemies) == 0:
-            level_loading = True
-            for bullet in bullets:
-                bullets.pop(bullets.index(bullet))
-                all_sprites.remove(bullet)
-                all_sprites.draw(screen)
-
-        enemy_shoot()
-        hud.update(player.hit_points, player.score)
-        fps_count += 1
-        player.update(keys, mouse)
-
-        if keys[pygame.K_a]:
-            shoot(True, player_stats_temp[0])
-
-        # Collision of player and enemy bullet
-
-        if len(enemy_bullets) > 0:
-            for bullet in enemy_bullets:
-                if pygame.sprite.collide_rect(player, bullet):
-                    player.hit_points -= 1
-                    pygame.mixer.Channel(5).play(pygame.mixer.Sound('sound/player/sfx-hurt1.wav'))
-                    enemy_bullets.pop(enemy_bullets.index(bullet))
-                    all_sprites.remove(bullet)
-
-        # Collision of player bullet and enemy
-
-        for bullet in bullets:
-            for enemy in enemies:
-                if enemy.hit_points <= 0:
-                    enemy.is_dead = True
-                if pygame.sprite.collide_rect(bullet, enemy) and not enemy.is_dead:
-                    player.score += enemy.score_hit
-                    enemy.take_damage(player.attack, screen)
+            if len(enemies) == 0:
+                level_loading = True
+                for bullet in bullets:
                     bullets.pop(bullets.index(bullet))
                     all_sprites.remove(bullet)
-                    break
-        # Death of enemy
-        for enemy in enemies:
-            if enemy.pop:
-                player.score += enemy.score_kill
-                enemy_death_counter = 0
-                enemies.pop(enemies.index(enemy))
-                all_sprites.remove(enemy)
-                all_enemies.remove(enemy)
+                    all_sprites.draw(screen)
 
-            # Player gets hurt when colliding with enemy
+            enemy_shoot()
+            hud.update(player.hit_points, player.score, current_level, enemy_total)
+            fps_count += 1
+            player.update(keys, mouse)
 
-            if pygame.sprite.collide_rect(enemy, player):
-                player.is_hurting = True
-                player.player_hurt()
+            if keys[pygame.K_a]:
+                shoot(True, player_stats_temp[0])
 
-        # Timer before player can shoot again
-        player_stats_temp[0] = shoot(False, player_stats_temp[0])
-        enemy_spawn(0, False)
+            # Collision of player and enemy bullet
+            if len(enemy_bullets) > 0:
+                for bullet in enemy_bullets:
+                    if pygame.sprite.collide_rect(player, bullet):
+                        player.hit_points -= 1
+                        pygame.mixer.Channel(5).play(pygame.mixer.Sound('sound/player/sfx-hurt1.wav'))
+                        enemy_bullets.pop(enemy_bullets.index(bullet))
+                        all_sprites.remove(bullet)
 
-        screen.blit(background, (0, 0))
-        all_sprites.draw(screen)
-        all_enemies.draw(screen)
-        level_sprites.draw(screen)
-        hud_sprites.draw(screen)
+            # Collision of player bullet and enemy
+            for bullet in bullets:
+                for enemy in enemies:
+                    if enemy.hit_points <= 0:
 
+                        enemy.is_dead = True
+                    if pygame.sprite.collide_rect(bullet, enemy) and not enemy.is_dead:
+                        player.score += enemy.score_hit
+                        enemy.take_damage(player.attack, screen)
+                        bullets.pop(bullets.index(bullet))
+                        all_sprites.remove(bullet)
+                        break
+            # Death of enemy
+            for enemy in enemies:
+                if enemy.pop:
+                    enemy_total -= 1
+                    player.score += enemy.score_kill
+                    enemy_death_counter = 0
+                    enemies.pop(enemies.index(enemy))
+                    all_sprites.remove(enemy)
+                    all_enemies.remove(enemy)
+
+                # Player gets hurt when colliding with enemy
+                if pygame.sprite.collide_rect(enemy, player):
+                    player.is_hurting = True
+                    player.player_hurt()
+
+            # Timer before player can shoot again
+            player_stats_temp[0] = shoot(False, player_stats_temp[0])
+            enemy_spawn(0, False)
+
+
+        else:
+            hud.update(0, player.score, current_level, enemy_total)
+            if gameover_sound_temp:
+                pygame.mixer.stop()
+                pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound/gameover.ogg'))
+                gameover_sound_temp = False
+            gameover_font = pygame.font.SysFont('arial', 75)
+            gameover_help_font = pygame.font.SysFont('arial', 32)
+            gameover_label = gameover_font.render('GAME OVER', 1, (255, 0, 0))
+            screen.blit(gameover_label, (
+            resolution[0] / 2 - (gameover_label.get_width() / 2), resolution[1] / 2 - gameover_label.get_height()))
+            gameover_help_label = gameover_help_font.render('PRESS ESC KEY TO QUIT', 1, (255, 255, 255))
+            screen.blit(gameover_help_label, (resolution[0] / 2 - (gameover_label.get_width() / 2) + 25,
+                                              resolution[1] / 2 - gameover_label.get_height() + 100))
     else:
-        hud.update(player.hit_points, player.score)
-        if gameover_sound_temp:
-            pygame.mixer.stop()
-            pygame.mixer.Channel(0).play(pygame.mixer.Sound('sound/gameover.ogg'))
-            gameover_sound_temp = False
-        gameover_font = pygame.font.SysFont('arial', 75)
-        gameover_help_font = pygame.font.SysFont('arial', 32)
-        gameover_label = gameover_font.render('GAME OVER', 1, (255, 0, 0))
-        screen.blit(gameover_label, (resolution[0] / 2 - (gameover_label.get_width() / 2), resolution[1] / 2 - gameover_label.get_height()))
-        gameover_help_label = gameover_help_font.render('PRESS ESC KEY TO QUIT', 1, (255, 255, 255))
-        screen.blit(gameover_help_label, (resolution[0] / 2 - (gameover_label.get_width() / 2) + 25, resolution[1] / 2 - gameover_label.get_height() + 100))
+        pause_game_overlay()
 
     pygame.display.update()
 

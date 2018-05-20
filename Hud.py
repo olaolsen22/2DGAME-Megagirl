@@ -29,6 +29,8 @@ class Hud(pygame.sprite.Sprite):
                             pygame.image.load('sprites/hud/stat_10.png'),
                             ]
         self.image_score = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/score.png'))
+        self.image_level = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/level.png'))
+        self.image_enemies = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/enemies.png'))
         self.screen_size = screen_size
         self.image = pygame.Surface(screen_size, pygame.SRCALPHA, 32)
         self.image.blit(self.image_health[10], (0, 20))
@@ -40,14 +42,27 @@ class Hud(pygame.sprite.Sprite):
         self.upgrade = False
         self.screen_size = screen_size
 
-    def update(self, player_health, player_score):
+    def update(self, player_health, player_score, level, enemies):
         self.image = pygame.Surface(self.screen_size, pygame.SRCALPHA, 32)
         self.image.blit(self.image_health[player_health], (0, 20))
-        self.image_score = pygame.image.load('sprites/hud/score.png')
-        score_font = pygame.font.SysFont('arial', 24)
-        score_label = score_font.render(str(player_score), 1, (255, 255, 255))
-        self.image_score.blit(score_label, (65,-2))
+
+
+        self.image_score = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/score.png'))
+        stats_font = pygame.font.SysFont('arial', 24)
+        stats_label = stats_font.render(str(player_score), 1, (255, 255, 255))
+        self.image_score.blit(stats_label, (65,-2))
         self.image.blit(self.image_score, (self.screen_size[0] - self.image_score.get_width(), 20))
+
+
+        self.image_level = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/level.png'))
+        stats_label = stats_font.render(str(level), 1, (255, 255, 255))
+        self.image_level.blit(stats_label, (65, -2))
+        self.image.blit(self.image_level, (self.screen_size[0] - self.image_score.get_width(), 50))
+
+        self.image_enemies = pygame.Surface.convert_alpha(pygame.image.load('sprites/hud/enemies.png'))
+        stats_label = stats_font.render(str(enemies), 1, (255, 255, 255))
+        self.image_enemies.blit(stats_label, (65, -2))
+        self.image.blit(self.image_enemies, (self.screen_size[0] - self.image_score.get_width(), 80))
 
     def clear_hud(self):
         self.image = pygame.Surface(self.screen_size, pygame.SRCALPHA, 32)

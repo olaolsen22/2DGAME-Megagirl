@@ -61,6 +61,7 @@ class Player(pygame.sprite.Sprite):
             self.hit_points -= 1
             self.hurt_cooldown += 1
         else:
+            # Whitens the character when damaged physically
             image_temp = self.image.copy()
             sprite_temp = pygame.PixelArray(image_temp)
             sprite_temp.replace((3, 104, 216), (255, 255, 255), 0.1)
